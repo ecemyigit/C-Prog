@@ -1,0 +1,64 @@
+#include <stdio.h>
+
+typedef enum TypeTag {
+	ADD,
+	SUB,
+	MUL,
+	DIV,
+	FIBO,
+} TypeTag;
+
+typedef struct Node
+{
+	TypeTag type;
+} Node;
+
+int calc(int res) {
+	printf("%d \n", res);
+}
+
+int ad(int x, int y) {
+	return x + y;
+}
+
+int su(int x, int y) {
+	return x - y;
+}
+
+int mu(int x, int y) {
+	return x * y;
+}
+
+int di(int x, int y) {
+	return x / y;
+}
+
+int fib(int n) {
+	int i;
+	int f[n + 2];
+
+	// declaring the first two numbers in the series
+	f[0] = 0;
+	f[1] = 1;
+	for (i = 2; i <= n; i++) {
+		f[i] = f[i - 1] + f[i - 2];
+	}
+	return f[n-1];
+}
+
+int main() {
+	int (*makeFunc[])(int, int) = {ad, su, mu, di, fib};
+	Node *add = (*makeFunc[ADD])(10, 6);
+    Node *mul = (*makeFunc[MUL])(5,4);
+    Node *sub = (*makeFunc[SUB])(add,mul);
+    Node *fibo = (*makeFunc[FIBO])(abs(sub), NULL);
+    
+    printf("add: ");
+	calc(add);
+	printf("mul: ");
+	calc(mul);
+	printf("sub: ");
+	calc(sub);
+	printf("fibo: ");
+	calc(fibo);
+}
