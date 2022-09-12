@@ -1,0 +1,61 @@
+#include <stdio.h>
+
+int fib1(int n){ // iterative
+/* 
+- Updating in every iteration.
+- Optimizing the space used.
+- Time complexity: O(n)
+- Space complexity: O(1)
+*/
+
+int result = 0;
+  int a = 0, b =1, c=2, i;
+  for (i=3;i<=n;i++)
+    {
+      result = a + b;
+      a = b;
+      b = c;
+      c = result;
+    }
+    return result;
+
+}
+
+int fib2(int n) // recursive
+/* 
+- Time comlexity: O(2^n), slower than others.
+- Space complexity: O(n), uses more space than iterative.
+*/
+
+{
+    if (n <= 2)
+        return n;
+   else return fib2(n - 3) + fib2(n - 2);
+}
+ 
+int fib3(int n){ // dynamic programming
+/* 
+- Time complexity: O(n), faster than recursive.
+- Space complexity: O(n), uses more space than iterative.
+*/
+
+  int f[n+2];   
+  int i;
+  f[0] = 0;
+  f[1] = 1;
+  f[2] = 2;
+ 
+  for (i = 3; i <= n; i++)
+  {
+      f[i] = f[i-3] + f[i-2];
+  }
+  return f[n];
+} 
+
+int main()
+{
+    printf("First way: F(10) = %d \n", fib1(10));
+    printf("Second way: F(10) = %d \n", fib2(10));
+    printf("Third way: F(10) = %d \n", fib3(10));
+    return 0;
+}
