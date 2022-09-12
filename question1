@@ -47,18 +47,18 @@ int fib(int n) {
 }
 
 int main() {
-	int (*makeFunc[])(int, int) = {ad, su, mu, di, fib};
-	Node *add = (*makeFunc[ADD])(10, 6);
+    int (*makeFunc[])(int, int) = {ad, su, mu, di, fib};
+    Node *add = (*makeFunc[ADD])(10, 6);
     Node *mul = (*makeFunc[MUL])(5,4);
     Node *sub = (*makeFunc[SUB])(add,mul);
     Node *fibo = (*makeFunc[FIBO])(abs(sub), NULL);
     
     printf("add: ");
-	calc(add);
-	printf("mul: ");
-	calc(mul);
-	printf("sub: ");
-	calc(sub);
-	printf("fibo: ");
-	calc(fibo);
+    calc(add);
+    printf("mul: ");
+    calc(mul);
+    printf("sub: ");
+    calc(sub);
+    printf("fibo: ");
+    calc(fibo);
 }
