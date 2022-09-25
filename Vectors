@@ -1,0 +1,143 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+typedef struct vector
+{double x,y,z;
+} vector;
+
+typedef struct node
+{vector vect;
+struct node * next;
+struct node * prev;
+} node;
+
+void add(node**);
+void iterate(node*);
+void print(node*);
+void length(node*);
+void minimumv(node*,int);
+void dealloc(node**);
+
+int main()
+{
+node* vec1=NULL;
+node* vec2=NULL;
+node* vec3=NULL;
+
+vec1=(node*)malloc(sizeof(node));
+vec2=(node*)malloc(sizeof(node));
+vec3=(node*)malloc(sizeof(node));
+
+vec1->prev=NULL;
+vec2->prev=vec1;
+vec3->prev=vec2;
+
+vec1->vect.x=2;
+vec1->vect.y=1;
+vec1->vect.z=8;
+vec1->next=vec2;
+
+vec2->vect.x=3;
+vec2->vect.y=2;
+vec2->vect.z=4;
+vec2->next=vec3;
+
+vec3->vect.x=3;
+vec3->vect.y=4;
+vec3->vect.z=5;
+vec3->next=NULL;
+
+add(&vec1);
+iterate(vec1);
+print(vec1);
+length(vec1);
+minimumv(vec3,4);
+dealloc(&vec1);
+return 0;
+}
+
+void add(node** t)
+{
+vector newv;
+node* newn=(node*)malloc(sizeof(node));
+newn->prev=NULL;
+printf("Enter a new vector: \n");
+printf("x: ");
+scanf("%lf",&newv.x);
+newn->vect.x=newv.x;
+printf("y: ");
+scanf("%lf",&newv.y);
+newn->vect.y=newv.y;
+printf("z: ");
+scanf("%lf",&newv.z);
+newn->vect.z=newv.z;
+newn->next=(*t);
+(*t)=newn;
+}
+
+void dealloc(node** t)
+{node* n = *t;
+node* next;
+n->prev=NULL;
+while (n!= NULL)
+{next=n->next;
+free(n);
+n=next;
+}
+*t=NULL;
+}
+
+void iterate(node*vec1)
+{
+while(vec1!= NULL)
+{
+ vec1=vec1->next;
+}
+}
+
+void length(node* n)
+{double leng, m;
+int c=1;
+for(int i=0; n!=NULL; i++)
+{
+leng = sqrt(pow(n->vect.x, 2) + pow(n->vect.y, 2) + pow(n->vect.z, 2));
+if(leng>m)
+{m=leng;
+c=i+1;
+}
+n->prev=NULL;
+n=n->next;
+}
+printf("\nThe longest vector is vector no %d and its length is: %lf\n", c, m);
+}
+
+void print(node* n)
+{
+int i;
+while (n!=NULL)
+{
+printf("\nPrinting vector no %d: \n", i);
+printf("x = %f ", n->vect.x);
+printf("y = %f ", n->vect.y);
+printf("z = %f ", n->vect.z);
+i++;
+n->prev=NULL;
+n=n->next;
+}
+}
+
+void minimumv(node* n, int i)
+{
+double min, leng;
+while(n!=NULL)
+{
+leng= sqrt(pow(n->vect.x, 2) + pow(n->vect.y, 2) + pow(n->vect.z, 2));
+if (min>leng)
+{min=leng;}
+n=n->prev;
+i--;
+}
+printf("\nVector no %d has the minimum length and its length is %lf\n", i, leng);
+}
+
